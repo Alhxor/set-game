@@ -1,19 +1,26 @@
 
 body {
     margin: 2rem;
+    font-family: sans-serif;
+}
+
+.control {
+    display: flex;
+    width: 500px;
+    /* justify-content: center; */
 }
 
 .board {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
-    align-content: space-between;
+    /* justify-content: center; */
 
-    width: 450px;
+    width: 500px;
 }
 
 .card {
     margin-bottom: 1rem;
+    margin-right: 1rem;
 
     width: 100px;
     height: 135px;
@@ -35,9 +42,34 @@ body {
     background-color: #fafada;
 }
 
+.selected:hover {
+    background-color: #fafada;
+}
+
 .shape {
     width: 72px;
     height: 33px;
+}
+
+.btn {
+    margin: 1rem 1rem 1rem 0;
+    padding: 0.3rem;
+    cursor: pointer;
+
+    height: 30px;
+    width: 130px;
+
+    background-color: #bdb;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn:hover {
+    background-color: #cfc;
 }
 
 .diamond-solid-red      { background: center no-repeat url("img/diamond_solid_red.png");   }
