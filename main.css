@@ -1,0 +1,76 @@
+
+body {
+    margin: 2rem;
+}
+
+.board {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    width: 450px;
+}
+
+.card {
+    margin-bottom: 1rem;
+
+    width: 100px;
+    height: 135px;
+
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:hover {
+    background-color: #fafafa;
+}
+
+.selected {
+    background-color: #fafada;
+}
+
+.shape {
+    width: 72px;
+    height: 33px;
+}
+
+.diamond-solid-red      { background: center no-repeat url("img/diamond_solid_red.png");   }
+.diamond-solid-green    { background: center no-repeat url("img/diamond_solid_green.png"); }
+.diamond-solid-blue     { background: center no-repeat url("img/diamond_solid_blue.png");  }
+
+.diamond-striped-red    { background: center no-repeat url("img/diamond_striped_red.png");   }
+.diamond-striped-green  { background: center no-repeat url("img/diamond_striped_green.png"); }
+.diamond-striped-blue   { background: center no-repeat url("img/diamond_striped_blue.png");  }
+
+.diamond-open-red       { background: center no-repeat url("img/diamond_open_red.png");   }
+.diamond-open-green     { background: center no-repeat url("img/diamond_open_green.png"); }
+.diamond-open-blue      { background: center no-repeat url("img/diamond_open_blue.png");  }
+
+.oval-solid-red         { background: center no-repeat url("img/oval_solid_red.png");   }
+.oval-solid-green       { background: center no-repeat url("img/oval_solid_green.png"); }
+.oval-solid-blue        { background: center no-repeat url("img/oval_solid_blue.png");  }
+
+.oval-striped-red       { background: center no-repeat url("img/oval_striped_red.png");   }
+.oval-striped-green     { background: center no-repeat url("img/oval_striped_green.png"); }
+.oval-striped-blue      { background: center no-repeat url("img/oval_striped_blue.png");  }
+
+.oval-open-red          { background: center no-repeat url("img/oval_open_red.png");   }
+.oval-open-green        { background: center no-repeat url("img/oval_open_green.png"); }
+.oval-open-blue         { background: center no-repeat url("img/oval_open_blue.png");  }
+
+.squiggle-solid-red     { background: center no-repeat url("img/squiggle_solid_red.png");   }
+.squiggle-solid-green   { background: center no-repeat url("img/squiggle_solid_green.png"); }
+.squiggle-solid-blue    { background: center no-repeat url("img/squiggle_solid_blue.png");  }
+
+.squiggle-striped-red   { background: center no-repeat url("img/squiggle_striped_red.png");   }
+.squiggle-striped-green { background: center no-repeat url("img/squiggle_striped_green.png"); }
+.squiggle-striped-blue  { background: center no-repeat url("img/squiggle_striped_blue.png");  }
+
+.squiggle-open-red      { background: center no-repeat url("img/squiggle_open_red.png");   }
+.squiggle-open-green    { background: center no-repeat url("img/squiggle_open_green.png"); }
+.squiggle-open-blue     { background: center no-repeat url("img/squiggle_open_blue.png");  }
