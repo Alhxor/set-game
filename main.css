@@ -7,8 +7,8 @@ body {
 
 .control {
     display: flex;
-    flex-flow: row wrap;
-    min-width: 250px;
+    flex-flow: row nowrap;
+    min-width: 360px;
     max-width: 500px;
     /* justify-content: center; */
 }
@@ -18,7 +18,7 @@ body {
     flex-flow: row wrap;
     /* justify-content: center; */
 
-    min-width: 250px;
+    min-width: 360px;
     max-width: 500px;
 }
 
@@ -59,13 +59,14 @@ body {
     cursor: pointer;
 
     height: 30px;
-    width: 130px;
+    max-width: 130px;
 
     background-color: #bdb;
     border: 1px solid #bcbcbc;
     border-radius: 5px;
 
     display: flex;
+    flex-grow: 1;
     justify-content: center;
     align-items: center;
 }
