@@ -7,7 +7,9 @@ body {
 
 .control {
     display: flex;
-    width: 500px;
+    flex-flow: row wrap;
+    min-width: 250px;
+    max-width: 500px;
     /* justify-content: center; */
 }
 
@@ -16,7 +18,8 @@ body {
     flex-flow: row wrap;
     /* justify-content: center; */
 
-    width: 500px;
+    min-width: 250px;
+    max-width: 500px;
 }
 
 .card {
