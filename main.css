@@ -3,6 +3,10 @@ body {
     margin: 2rem;
     font-family: sans-serif;
     background: #303030;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
 }
 
 .control {
