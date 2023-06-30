@@ -2,6 +2,7 @@
 body {
     margin: 2rem;
     font-family: sans-serif;
+    background: #303030;
 }
 
 .control {
@@ -32,18 +33,16 @@ body {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+
+    background-color: #fcfcfc;
 }
 
 .card:hover {
-    background-color: #fafafa;
+    background-color: #fcfcda;
 }
 
-.selected {
-    background-color: #fafada;
-}
-
-.selected:hover {
-    background-color: #fafada;
+.selected, .selected:hover {
+    background-color: #fafaaa;
 }
 
 .shape {
