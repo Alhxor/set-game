@@ -6,7 +6,7 @@ const FILLS = ['open', 'striped', 'solid']
 const NUMBERS = [1, 2, 3]
 
 class Card {
-    constructor(shape, fill, color, number, onClick = (e => {})) {
+    constructor(shape, fill, color, number) {
         this.shape = shape
         this.fill = fill
         this.color = color
@@ -16,7 +16,6 @@ class Card {
         const node = document.createElement('div')
         node.classList.add('card')
         node.innerHTML = `<div class="shape ${this.shape}-${this.fill}-${this.color}"></div>`.repeat(this.number)
-        node.addEventListener('click', onClick)
 
         this.node = node
     }
@@ -78,7 +77,7 @@ class Deck {
 
 function isASet(card1, card2, card3) {
     // In a set each parameter is either the same or different for all three cards
-    const isSet = (a, b, c) => (a === b && a === c) || (a !== b && a !== c)
+    const isSet = (a, b, c) => (a === b && a === c && b === c) || (a !== b && a !== c && b !== c)
 
     const colors = isSet(card1.color, card2.color, card3.color)
     const shapes = isSet(card1.shape, card2.shape, card3.shape)
@@ -91,11 +90,42 @@ function isASet(card1, card2, card3) {
 document.addEventListener("DOMContentLoaded", function () {
     const boardEl = document.getElementById('board')
     const drawBtn = document.getElementById('draw')
-    const deck = new Deck()
-    deck.shuffle()
+    const newGameBtn = document.getElementById('new')
+    const findBtn = document.getElementById('find')
 
-    const board = []
-    let selected = []
+    let deck, board = [], selected = [];
+
+    newGame()
+
+    newGameBtn.addEventListener('click', _ => newGame())
+    drawBtn.addEventListener('click', _ => { draw(); draw(); draw() })
+    findBtn.addEventListener('click', _ => {
+        let set = findSet()
+        for (const card of set) card.toggleSelection()
+    })
+
+    function findSet() {
+        for (let i = 0; i < board.length; i++)
+        for (let j = 0; j < board.length; j++)
+        for (let z = 0; z < board.length; z++) {
+            if (i === j || i === z || j === z) continue
+            if (isASet(board[i], board[j], board[z])) return [board[i], board[j], board[z]]
+        }
+        return []
+    }
+
+    function newGame() {
+        deck = new Deck()
+        deck.shuffle()
+
+        for (const card of board) card.remove()
+        board = []
+        selected = []
+
+        for (let i = 12; i > 0; i--) {
+            draw()
+        }
+    }
 
     const setFound = (set) => {
         console.log("Set found: ", set)
@@ -106,9 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
-    drawBtn.addEventListener('click', _ => { draw(); draw(); draw() })
-
-    const cardClick = (card) => {
+    function cardClick(card) {
         card.toggleSelection()
     
         const ind = selected.indexOf(card)
@@ -122,23 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (isASet(...selected)) {
                 setFound([...selected])
-                // card.remove() // sometimes the last clicked card in a set doesn't get removed, this should fix it
-                // UPD: it didn't, still leaves the last clicked card on the board and in selected state sometimes
-                // UPD2: it's not always the last clicked
                 for (const c of selected) c.remove()
-                // for (const el of boardEl.children) if (el.classList.contains('selected')) el.remove()
             }
             else {
                 console.log("Not a set")
                 for (const c of selected) c.toggleSelection()
-                // for (const el of boardEl.children) el.classList.remove('selected')
             }
 
             selected = []
         }
     }
 
-    const draw = () => {
+    function draw() {
         const card = deck.drawCard()
         if (!card) {
             console.log("No more cards in deck!")
@@ -151,10 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         board.push(card)
         boardEl.append(card.toHTML())
-    }
-
-    for (let i = 12; i > 0; i--) {
-        draw()
     }
 
 });
