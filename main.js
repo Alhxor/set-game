@@ -6,19 +6,37 @@ const FILLS = ['open', 'striped', 'solid']
 const NUMBERS = [1, 2, 3]
 
 class Card {
-    constructor(shape, fill, color, number) {
+    constructor(shape, fill, color, number, onClick = (e => {})) {
         this.shape = shape
         this.fill = fill
         this.color = color
         this.number = number
+        this.selected = false
+
+        const node = document.createElement('div')
+        node.classList.add('card')
+        node.innerHTML = `<div class="shape ${this.shape}-${this.fill}-${this.color}"></div>`.repeat(this.number)
+        node.addEventListener('click', onClick)
+
+        this.node = node
+    }
+
+    toggleSelection() {
+        if (!this.selected) {
+            this.selected = true
+            this.node.classList.add('selected')
+        } else {
+            this.selected = false
+            this.node.classList.remove('selected')
+        }
+    }
+
+    remove() {
+        this.node.remove()
     }
 
     toHTML() {
-        const card = document.createElement('div')
-        card.classList.add('card')
-        card.innerHTML = `<div class="shape ${this.shape}-${this.fill}-${this.color}"></div>`.repeat(this.number)
-
-        return card
+        return this.node
     }
 }
 
@@ -36,6 +54,10 @@ class Deck {
 
     drawCard() {
         return this.deck.pop()
+    }
+
+    getLength() {
+        return this.deck.length
     }
 
     shuffle() {
@@ -86,8 +108,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     drawBtn.addEventListener('click', _ => { draw(); draw(); draw() })
 
-    const cardClick = (card, cardEl) => {
-        cardEl.classList.toggle('selected')
+    const cardClick = (card) => {
+        card.toggleSelection()
     
         const ind = selected.indexOf(card)
         if (ind === -1)
@@ -100,12 +122,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (isASet(...selected)) {
                 setFound([...selected])
-                cardEl.remove() // sometimes the last clicked card in a set doesn't get removed, this should fix it
-                for (const el of boardEl.children) if (el.classList.contains('selected')) el.remove()
+                // card.remove() // sometimes the last clicked card in a set doesn't get removed, this should fix it
+                // UPD: it didn't, still leaves the last clicked card on the board and in selected state sometimes
+                // UPD2: it's not always the last clicked
+                for (const c of selected) c.remove()
+                // for (const el of boardEl.children) if (el.classList.contains('selected')) el.remove()
             }
             else {
                 console.log("Not a set")
-                for (const el of boardEl.children) el.classList.remove('selected')
+                for (const c of selected) c.toggleSelection()
+                // for (const el of boardEl.children) el.classList.remove('selected')
             }
 
             selected = []
@@ -119,12 +145,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return
         }
 
-        const cardEl = card.toHTML()
+        console.log(deck.getLength(), " cards remaining in deck")
 
-        cardEl.addEventListener('click', _ => cardClick(card, cardEl))
+        card.node.addEventListener('click', _ => cardClick(card))
 
         board.push(card)
-        boardEl.append(cardEl)
+        boardEl.append(card.toHTML())
     }
 
     for (let i = 12; i > 0; i--) {
