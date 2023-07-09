@@ -20,13 +20,21 @@ class Card {
         this.node = node
     }
 
+    select() {
+        this.selected = true
+        this.node.classList.add('selected')
+    }
+
+    deselect() {
+        this.selected = false
+        this.node.classList.remove('selected')
+    }
+
     toggleSelection() {
         if (!this.selected) {
-            this.selected = true
-            this.node.classList.add('selected')
+            this.select()
         } else {
-            this.selected = false
-            this.node.classList.remove('selected')
+            this.deselect()
         }
     }
 
@@ -92,16 +100,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawBtn = document.getElementById('draw')
     const newGameBtn = document.getElementById('new')
     const findBtn = document.getElementById('find')
+    const autoDrawBtn = document.getElementById('autodraw')
+    const drawUntilSetBtn = document.getElementById('draw-until-set')
+    const cardsLeft = document.getElementById('cards-left')
 
     let deck, board = [], selected = [];
+    let autoDraw = true;
+    let drawUntilSet = true;
 
     newGame()
 
     newGameBtn.addEventListener('click', _ => newGame())
-    drawBtn.addEventListener('click', _ => { draw(); draw(); draw() })
+    drawBtn.addEventListener('click', _ => { draw3() })
     findBtn.addEventListener('click', _ => {
         let set = findSet()
-        for (const card of set) card.toggleSelection()
+        selected = []
+        board.forEach(card => card.deselect())
+        set.forEach(card => card.select())
+    })
+
+    autoDrawBtn.addEventListener('click', e => {
+        autoDrawBtn.classList.toggle('disabled')
+        autoDraw = !autoDraw
+    })
+
+    drawUntilSetBtn.addEventListener('click', e => {
+        drawUntilSetBtn.classList.toggle('disabled')
+        drawUntilSet = !drawUntilSet
     })
 
     function findSet() {
@@ -125,6 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = 12; i > 0; i--) {
             draw()
         }
+
+        if (drawUntilSet) drawUntilSetExistsOnBoard()
     }
 
     const setFound = (set) => {
@@ -134,6 +161,29 @@ document.addEventListener("DOMContentLoaded", function () {
             let i = board.indexOf(card)
             board.splice(i, 1)
         })
+
+        if (deck.getLength() > 0) {
+            if (autoDraw && board.length < 12) draw3()
+            if (drawUntilSet) drawUntilSetExistsOnBoard()
+        }
+    }
+
+    function draw3() { draw(); draw(); draw(); }
+
+    function drawUntilSetExistsOnBoard() {
+        let setOnBoard = findSet()
+        // console.log(setOnBoard)
+
+        let i = 0
+        while (setOnBoard.length === 0 && deck.getLength() > 0 && i < 27) {
+            draw3()
+            setOnBoard = findSet()
+            i++
+        }
+
+        // if (setOnBoard) {
+        //     console.log(`Drew 3 cards ${i} times before finding set`, setOnBoard)
+        // }
     }
 
     function cardClick(card) {
@@ -163,12 +213,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function draw() {
         const card = deck.drawCard()
-        if (!card) {
-            console.log("No more cards in deck!")
-            return
-        }
 
-        console.log(deck.getLength(), " cards remaining in deck")
+        cardsLeft.innerText = deck.getLength()
 
         card.node.addEventListener('click', _ => cardClick(card))
 
