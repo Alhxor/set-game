@@ -1,0 +1,21 @@
+set game TODO
+
+functionality
+	auto draw option
+	auto draw more than 12 if there is no set
+	timer
+	count of sets found
+	last set found
+	explanation why it's not a set
+	personal best time
+	personal leaderboard
+	puzzle mode
+	
+UI
+	cards left in deck counter
+	card alignment (portrait / landscape)
+	switch to svg images & add more display options
+	card themes
+	page themes
+	separate mobile page (adaptive)
+	
