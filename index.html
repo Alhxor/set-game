@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head id="head">
+    <script>
+        (function() { /* https://makersaid.com/how-to-prevent-css-caching/ */
+            const href = '/main.css';
+
+            const head = document.getElementById('head')
+            const link = document.createElement('link');
+            const cacheBuster = Math.round(new Date().getTime() / 1000);
+            link.setAttribute('href', href + '?cb=' + cacheBuster);
+            link.setAttribute('rel','stylesheet');
+            head.appendChild(link);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css" />
     <title>Set game</title>
 </head>
 <body>
