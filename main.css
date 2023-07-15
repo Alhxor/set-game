@@ -52,8 +52,10 @@ body {
     background-color: #fcfcfc;
 }
 
-.card:hover {
-    background-color: #fcfcda;
+@media (hover: hover) {
+    .card:hover {
+        background-color: #fcfcda;
+    }
 }
 
 .selected, .selected:hover {
@@ -84,21 +86,19 @@ body {
     align-items: center;
 }
 
-.btn:hover {
-    background-color: #cfc;
+@media (hover: hover) {
+    .btn:hover {
+        background-color: #cfc;
+    }
 }
 
 .disabled {
     background-color: #dbd;
 }
 
-.disabled:hover {
-    background-color: #fcf;
-}
-
-@media (hover: none) {
-    .card:hover, .selected:hover, .btn:hover, .disabled:hover {
-        color: inherit;
+@media (hover: hover) {
+    .disabled:hover {
+        background-color: #fcf;
     }
 }
 
